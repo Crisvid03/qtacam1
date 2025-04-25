@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">QTA</string>
+
+    <string name="instrucciones">
+    Te voy a ayudar a solucionar el problema de las 2 mitades.\n\n1. Ingresa una cadena de caracteres.\n2. Te ayudaré a cortar la cadena en dos partes "iguales" (si la longitud es impar, el carácter central va en la primera mitad).\n3. Luego imprimiré la nueva cadena intercambiando las mitades.
+    </string>
+
+    <string name="instruccionesPalabras">
+    Te voy a ayudar a solucionar el problema de las 2 palabras.\n\n1. Ingresa una cadena de caracteres.\n2. Te ayudaré a cortar la cadena en dos partes "iguales" (si la longitud es impar, el carácter central va en la primera mitad).\n3. Luego imprimiré la nueva cadena intercambiando las mitades.
+    </string>
+
+</resources>
