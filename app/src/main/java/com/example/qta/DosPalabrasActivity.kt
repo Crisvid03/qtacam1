@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +15,8 @@ class DosPalabrasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dos_palabras)
 
+        val imageViewClose = findViewById<ImageView>(R.id.exitBtn)
+
         val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE)
         val correo = prefs.getString("correoUsuario", null)
 
@@ -23,6 +26,10 @@ class DosPalabrasActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.etRespuesta)
         val buttonSolucionar = findViewById<Button>(R.id.btnVerificar)
         val resultadoTextView = findViewById<TextView>(R.id.tvResultado)
+
+        imageViewClose.setOnClickListener {
+            finish()
+        }
 
         buttonSolucionar.setOnClickListener {
             val entrada = editText.text.toString().trim()

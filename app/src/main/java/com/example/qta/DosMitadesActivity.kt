@@ -14,10 +14,15 @@ class DosMitadesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dos_mitades)
 
         // Obtener views
+        val imageViewClose = findViewById<ImageView>(R.id.exitBtn)
         val tvSaludo = findViewById<TextView>(R.id.tvSaludo)
         val etRespuesta = findViewById<EditText>(R.id.etRespuesta)
         val btnVerificar = findViewById<Button>(R.id.btnVerificar)
         val tvResultado = findViewById<TextView>(R.id.tvResultado)
+
+        imageViewClose.setOnClickListener {
+            finish()
+        }
 
         val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE)
         val correo = prefs.getString("correoUsuario", null)

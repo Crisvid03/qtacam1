@@ -16,6 +16,11 @@ class LoginActivity : AppCompatActivity() {
         val etContrasena = findViewById<EditText>(R.id.etContrasena)
         val btnIngresar = findViewById<Button>(R.id.btnIngresar)
 
+        val imageViewBack = findViewById<ImageView>(R.id.backBtn)
+        imageViewBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed() // Comportamiento "atrás" moderno
+        }
+
         btnIngresar.setOnClickListener {
             val correoIngresado = etCorreo.text.toString().trim()
             val contrasenaIngresada = etContrasena.text.toString()
