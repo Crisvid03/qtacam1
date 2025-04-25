@@ -16,38 +16,37 @@ class FragmentosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fragmentos) // Usa el XML
+        setContentView(R.layout.activity_fragmentos)
 
-        val correo = intent.getStringExtra("correo") ?: "usuario"
+        val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE)
+        val correo = prefs.getString("correoUsuario", null)
+
+        val tvSaludo = findViewById<TextView>(R.id.textViewGreeting)
+        tvSaludo.text = if (correo != null) "Hola $correo" else "Hola invitado"
 
         val imageViewClose = findViewById<ImageView>(R.id.exitBtn)
         val textInputLayoutInputString = findViewById<TextInputLayout>(R.id.textInputLayoutInputString)
         val editTextInputString = textInputLayoutInputString.findViewById<TextInputEditText>(R.id.editTextInputString)
         val buttonSolve = findViewById<MaterialButton>(R.id.buttonSolve)
         val textViewResult = findViewById<TextView>(R.id.textViewResult)
-        val textViewErrorMessage = findViewById<TextView>(R.id.textViewErrorMessage) // Encontramos el nuevo TextView
-
+        val textViewErrorMessage = findViewById<TextView>(R.id.textViewErrorMessage)
 
         imageViewClose.setOnClickListener {
-            finish() // Cierra la actividad actual
+            finish()
         }
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNav.selectedItemId = R.id.parte3 // Estoy en esta Pantalla
+        bottomNav.selectedItemId = R.id.parte3
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.parte1 -> {
-                    startActivity(Intent(this, DosMitadesActivity::class.java).apply {
-                        putExtra("correo", correo)
-                    })
+                    startActivity(Intent(this, DosMitadesActivity::class.java))
                     finish()
                     true
                 }
                 R.id.parte2 -> {
-                    startActivity(Intent(this, DosPalabrasActivity::class.java).apply {
-                        putExtra("correo", correo)
-                    })
+                    startActivity(Intent(this, DosPalabrasActivity::class.java))
                     finish()
                     true
                 }
@@ -61,15 +60,11 @@ class FragmentosActivity : AppCompatActivity() {
 
             textViewResult.visibility = View.GONE
             textViewErrorMessage.visibility = View.GONE
-            textInputLayoutInputString.error = null // Limpiar también el error del TextInputLayout
+            textInputLayoutInputString.error = null
 
-            if (inputString.count { it.toLowerCase() == 'h' } < 2) {
+            if (inputString.count { it.lowercaseChar() == 'h' } < 2) {
                 textViewErrorMessage.visibility = View.VISIBLE
-
             } else {
-                textViewErrorMessage.visibility = View.GONE
-                textInputLayoutInputString.error = null // Limpiar error del TextInputLayout
-
                 val firstHIndex = inputString.indexOf('h', ignoreCase = true)
                 val lastHIndex = inputString.lastIndexOf('h', ignoreCase = true)
 
@@ -77,11 +72,10 @@ class FragmentosActivity : AppCompatActivity() {
                     val resultString = inputString.substring(0, firstHIndex) +
                             inputString.substring(lastHIndex + 1)
 
-                    textViewResult.text = "$resultString"
+                    textViewResult.text = resultString
                     textViewResult.visibility = View.VISIBLE
-
                 } else {
-                    textViewErrorMessage.text = "Error interno al procesar la cadena." // Mensaje de error más específico si falla aquí
+                    textViewErrorMessage.text = "Error interno al procesar la cadena."
                     textViewErrorMessage.visibility = View.VISIBLE
                     Toast.makeText(this, "No se pudo encontrar el fragmento según las reglas.", Toast.LENGTH_SHORT).show()
                 }

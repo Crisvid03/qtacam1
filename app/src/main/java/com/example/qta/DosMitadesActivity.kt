@@ -19,9 +19,10 @@ class DosMitadesActivity : AppCompatActivity() {
         val btnVerificar = findViewById<Button>(R.id.btnVerificar)
         val tvResultado = findViewById<TextView>(R.id.tvResultado)
 
-        // Obtener el correo desde el intent
-        val correo = intent.getStringExtra("correo") ?: "usuario"
-        tvSaludo.text = "Hola $correo"
+        val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE)
+        val correo = prefs.getString("correoUsuario", null)
+
+        tvSaludo.text = if (correo != null) "Hola $correo" else "Hola invitado"
 
         btnVerificar.setOnClickListener {
             val textoIngresado = etRespuesta.text.toString().trim()
@@ -74,9 +75,3 @@ class DosMitadesActivity : AppCompatActivity() {
         }
     }
 }
-
-
-
-
-
-

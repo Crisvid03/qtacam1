@@ -5,22 +5,20 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DosPalabrasActivity : AppCompatActivity() {
-
-    private lateinit var correo: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dos_palabras)
 
-        // Obtener el correo desde el intent
-        correo = intent.getStringExtra("correo") ?: "usuario"
+        val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE)
+        val correo = prefs.getString("correoUsuario", null)
+
+        val tvSaludo = findViewById<TextView>(R.id.tvSaludo) // Asegúrate de tener este TextView en tu XML
+        tvSaludo.text = if (correo != null) "Hola $correo" else "Hola invitado"
 
         val editText = findViewById<EditText>(R.id.etRespuesta)
         val buttonSolucionar = findViewById<Button>(R.id.btnVerificar)
@@ -38,24 +36,19 @@ class DosPalabrasActivity : AppCompatActivity() {
             }
         }
 
-
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.selectedItemId = R.id.parte2 // Estoy en esta Pantalla
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.parte1 -> {
-                    startActivity(Intent(this, DosMitadesActivity::class.java).apply {
-                        putExtra("correo", correo)
-                    })
+                    startActivity(Intent(this, DosMitadesActivity::class.java))
                     finish()
                     true
                 }
                 R.id.parte2 -> true
                 R.id.parte3 -> {
-                    startActivity(Intent(this, FragmentosActivity::class.java).apply {
-                        putExtra("correo", correo)
-                    })
+                    startActivity(Intent(this, FragmentosActivity::class.java))
                     finish()
                     true
                 }
@@ -63,5 +56,4 @@ class DosPalabrasActivity : AppCompatActivity() {
             }
         }
     }
-
 }

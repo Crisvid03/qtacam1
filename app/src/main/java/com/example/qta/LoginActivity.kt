@@ -20,6 +20,11 @@ class LoginActivity : AppCompatActivity() {
             val correoIngresado = etCorreo.text.toString().trim()
             val contrasenaIngresada = etContrasena.text.toString()
 
+            val prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE)
+            val editor = prefs.edit()
+            editor.putString("correoUsuario", correoIngresado)
+            editor.apply()
+
             if (correoIngresado.isNotEmpty() && contrasenaIngresada.isNotEmpty()) {
                 val intent = Intent(this, DosMitadesActivity::class.java)
                 intent.putExtra("correo", correoIngresado)
